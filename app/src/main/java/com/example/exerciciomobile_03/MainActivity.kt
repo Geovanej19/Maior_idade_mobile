@@ -1,3 +1,4 @@
+
 package com.example.exerciciomobile_03
 
 import android.os.Bundle
@@ -23,7 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -39,9 +40,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             ExercicioMobile03Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
                     ComponetesScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
@@ -53,18 +57,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ComponetesScreen(modifier: Modifier = Modifier) {
-
-    var idade by remember {
-        mutableStateOf(0)
-    }
+    var idade by remember { mutableIntStateOf(0) }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(Color.White)
+            .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Qual é a sua idade?",
+        Text(
+            text = "Qual é a sua idade?",
             fontSize = 32.sp,
             fontWeight = FontWeight.SemiBold,
             color = Color(0xFF426FEA),
@@ -87,7 +90,7 @@ fun ComponetesScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = "$idade",
+            text = idade.toString(),
             fontSize = 30.sp,
             fontWeight = FontWeight.SemiBold,
             color = Color(0xFF426FEA),
@@ -95,7 +98,6 @@ fun ComponetesScreen(modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
-
 
         Row(
             modifier = Modifier
@@ -105,71 +107,46 @@ fun ComponetesScreen(modifier: Modifier = Modifier) {
         ) {
             Button(
                 onClick = {
-                    if (idade > 0){
-                        idade--
-                    }
+                    if (idade > 0) idade--
                 },
-
                 modifier = Modifier.size(60.dp),
-                border = BorderStroke(2.dp, color = Color.Black),
-                shape = RoundedCornerShape(
-                    6.dp,
-                    6.dp,
-                    6.dp,
-                    6.dp
-                ),
+                border = BorderStroke(2.dp, Color.Black),
+                shape = RoundedCornerShape(6.dp),
                 colors = ButtonDefaults.buttonColors(
-                    Color(0xFF426FEA)
+                    containerColor = Color(0xFF426FEA)
                 )
             ) {
-                Text(
-                    text = "-",
-                    fontSize = 20.sp
-                )
+                Text("-", fontSize = 20.sp)
             }
 
             Spacer(modifier = Modifier.width(20.dp))
 
             Button(
                 onClick = {
-                    if (idade < 180) {
-                        idade++
-                    }
+                    if (idade < 180) idade++
                 },
                 modifier = Modifier.size(60.dp),
-                border = BorderStroke(2.dp, color = Color.Black),
-                shape = RoundedCornerShape(
-                    6.dp,
-                    6.dp,
-                    6.dp,
-                    6.dp
-                ),
+                border = BorderStroke(2.dp, Color.Black),
+                shape = RoundedCornerShape(6.dp),
                 colors = ButtonDefaults.buttonColors(
-                    Color(0xFF426FEA)
+                    containerColor = Color(0xFF426FEA)
                 )
             ) {
-                Text(
-                    text = "+",
-                    fontSize = 20.sp
-                )
+                Text("+", fontSize = 20.sp)
             }
         }
 
         Text(
-            text = if (idade >= 18){
-                "Você é Maior de idade"
-            }else{
-                "Você é Menor de idade"
-                 },
+            text = if (idade >= 18) {
+                "Você é maior de idade"
+            } else {
+                "Você é menor de idade"
+            },
             color = Color(0xFF426FEA),
             fontSize = 25.sp,
             fontWeight = FontWeight.W100,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
-
     }
-
-
 }
-
